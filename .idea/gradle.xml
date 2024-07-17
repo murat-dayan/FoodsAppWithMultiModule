@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/search" />
+            <option value="$PROJECT_DIR$/feature/search/data" />
+            <option value="$PROJECT_DIR$/feature/search/domain" />
             <option value="$PROJECT_DIR$/feature/search/ui" />
             <option value="$PROJECT_DIR$/mediaplayer" />
           </set>
