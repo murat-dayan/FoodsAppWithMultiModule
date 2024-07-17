@@ -3,6 +3,7 @@ package com.muratdayan.common.utils
 import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 
 sealed class UiText {
     data class RemoteString(val message: String) : UiText()
@@ -20,13 +21,17 @@ sealed class UiText {
         }
     }
 
-    /*@Composable
-    fun getString(context: Context): String {
+    @Composable
+    fun getString(): String {
         return when (this) {
-            is RemoteString -> message
-            is LocaleString -> context.getString(res, *args)
+            is RemoteString -> {
+                message
+            }
+            is LocaleString -> {
+                stringResource(res, *args)
+            }
             Idle -> ""
 
         }
-    }*/
+    }
 }
