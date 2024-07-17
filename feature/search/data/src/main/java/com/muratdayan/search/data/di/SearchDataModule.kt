@@ -1,6 +1,8 @@
 package com.muratdayan.search.data.di
 
 import com.muratdayan.search.data.remote.SearchApiService
+import com.muratdayan.search.data.repository.SearchRepoImpl
+import com.muratdayan.search.domain.repository.SearchRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,6 +29,11 @@ object SearchDataModule {
     @Provides
     fun provideSearchApiService(retrofit: Retrofit): SearchApiService{
         return  retrofit.create(SearchApiService::class.java)
+    }
+
+    @Provides
+    fun provideSearchRepo(searchApiService: SearchApiService): SearchRepository {
+        return  SearchRepoImpl(searchApiService)
     }
 
 }
