@@ -5,8 +5,8 @@ import com.muratdayan.search.domain.model.RecipeDetails
 
 interface SearchRepository {
 
-    suspend fun getRecipes(): List<Recipe>
+    suspend fun getRecipes(s:String): Result<List<Recipe>>
 
-    suspend fun getRecipeDetails(id: String): RecipeDetails
+    suspend fun getRecipeDetails(id: String): Result<RecipeDetails>
 
 }
