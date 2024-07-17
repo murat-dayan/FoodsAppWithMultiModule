@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
@@ -31,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.muratdayan.common.utils.UiText
@@ -49,9 +51,16 @@ fun RecipeListScreen(
     Scaffold(
         topBar = {
             TextField(
+                placeholder = {
+                    Text(
+                        text = "Search here...",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                },
                 value = query.value,
                 onValueChange = {
                     query.value = it
+                    recipeListViewModel.onEvent(RecipeList.Event.SearchRecipe(query.value))
                 },
                 colors = TextFieldDefaults.colors(
                     focusedIndicatorColor = Color.Transparent,
@@ -109,44 +118,62 @@ fun RecipeListScreen(
                                 .height(250.dp),
                             contentScale = ContentScale.Crop
                         )
-                        Spacer(modifier = Modifier.height(12.dp))
-                        Text(
-                            text = it.strMeal,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        Spacer(modifier = Modifier.height(12.dp))
 
-                        if (it.strTags.isNotEmpty()) {
-                            FlowRow {
-                                it.strTags.split(",")
-                                    .forEach {
-                                        Box(
-                                            modifier = Modifier
-                                                .wrapContentSize()
-                                                .background(
-                                                    color = Color.White,
-                                                    shape = RoundedCornerShape(12.dp)
-                                                )
-                                                .clip(RoundedCornerShape(12.dp))
-                                                .border(
-                                                    width = 1.dp,
-                                                    color = Color.Red,
-                                                    shape = RoundedCornerShape(12.dp)
-                                                ),
-                                            contentAlignment = Alignment.Center
-                                        ) {
-                                            Text(
-                                                text = it,
-                                                style = MaterialTheme.typography.bodySmall,
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Column(
+                            modifier = Modifier
+                                .padding(vertical = 12.dp)
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                        ) {
+                            Text(
+                                text = it.strMeal,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Text(
+                                text = it.strInstruction,
+                                style = MaterialTheme.typography.bodyMedium,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 4
+                            )
+
+                            Spacer(modifier = Modifier.height(12.dp))
+                            if (it.strTags.isNotEmpty()) {
+                                FlowRow {
+                                    it.strTags.split(",")
+                                        .forEach {
+                                            Box(
                                                 modifier = Modifier
                                                     .padding(horizontal = 8.dp, vertical = 4.dp)
-                                            )
+                                                    .wrapContentSize()
+                                                    .background(
+                                                        color = Color.White,
+                                                        shape = RoundedCornerShape(24.dp)
+                                                    )
+                                                    .clip(RoundedCornerShape(24.dp))
+                                                    .border(
+                                                        width = 1.dp,
+                                                        color = Color.Red,
+                                                        shape = RoundedCornerShape(24.dp)
+                                                    ),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Text(
+                                                    text = it,
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                    modifier = Modifier
+                                                        .padding(horizontal = 12.dp, vertical = 6.dp)
+                                                )
 
+                                            }
                                         }
-                                    }
+                                }
+                                Spacer(modifier = Modifier.height(12.dp))
                             }
-                            Spacer(modifier = Modifier.height(12.dp))
                         }
+
                     }
                 }
             }
