@@ -7,7 +7,10 @@ import androidx.navigation.compose.rememberNavController
 import com.muratdayan.common.navigation.NavigationSubGraphRoute
 
 @Composable
-fun RecipeNavigation(modifier: Modifier = Modifier, navigationSubGraphs: NavigationSubGraphs) {
+fun RecipeNavigation(
+    modifier: Modifier = Modifier,
+    navigationSubGraphs: NavigationSubGraphs
+) {
     val navHostController = rememberNavController()
 
     NavHost(

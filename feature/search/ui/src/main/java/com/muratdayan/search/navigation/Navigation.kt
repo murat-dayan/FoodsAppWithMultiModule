@@ -1,6 +1,8 @@
-package com.muratdayan.search.navigation
+    package com.muratdayan.search.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.muratdayan.common.navigation.FeatureApi
@@ -13,8 +15,8 @@ interface SearchFeatureApi: FeatureApi
 
 class SearchFeatureImpl: SearchFeatureApi{
     override fun registerGraph(
-        navGraphBuilder: androidx.navigation.NavGraphBuilder,
-        navHostController: androidx.navigation.NavHostController
+        navGraphBuilder: NavGraphBuilder,
+        navHostController: NavHostController
     ) {
         navGraphBuilder.navigation(
             route = NavigationSubGraphRoute.Search.route,
