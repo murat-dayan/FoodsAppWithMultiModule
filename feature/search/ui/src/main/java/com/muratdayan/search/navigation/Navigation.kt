@@ -1,5 +1,6 @@
     package com.muratdayan.search.navigation
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -9,6 +10,8 @@ import com.muratdayan.common.navigation.FeatureApi
 import com.muratdayan.common.navigation.NavigationRoute
 import com.muratdayan.common.navigation.NavigationSubGraphRoute
 import com.muratdayan.search.screens.recipedetails.RecipeDetailScreen
+import com.muratdayan.search.screens.recipedetails.RecipeDetailViewModel
+import com.muratdayan.search.screens.recipedetails.RecipeDetailsObject
 import com.muratdayan.search.screens.recipelist.RecipeList
 import com.muratdayan.search.screens.recipelist.RecipeListScreen
 import com.muratdayan.search.screens.recipelist.RecipeListViewModel
@@ -35,7 +38,16 @@ class SearchFeatureImpl: SearchFeatureApi{
             }
 
             composable(route = NavigationRoute.RecipeDetails.route){
-                RecipeDetailScreen()
+                val recipeDetailViewModel = hiltViewModel<RecipeDetailViewModel>()
+                val mealId = it.arguments?.getString("id")
+                LaunchedEffect(key1 = mealId) {
+                    mealId?.let {
+                        recipeDetailViewModel.onEvent(RecipeDetailsObject.Event.FetchRecipeDetails(it))
+                    }
+                }
+                RecipeDetailScreen(
+                    recipeDetailViewModel = recipeDetailViewModel
+                )
             }
 
         }
